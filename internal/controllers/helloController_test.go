@@ -9,8 +9,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-const ok_hello = `{"message":"` + OK_HELLO + `"}`
-
 func TestHello(t *testing.T) {
 	e := echo.New()
 	req := httptest.NewRequest(http.MethodGet, "/hello", nil)
@@ -20,10 +18,10 @@ func TestHello(t *testing.T) {
 	controller := &HelloController{}
 
 	if assert.NoError(t, controller.Hello(c)) {
-		newl := len(rec.Body.String()) - 1
+		newl := len(rec.Body.String()) - 2
 
 		assert.Equal(t, http.StatusOK, rec.Code)
-		assert.Equal(t, ok_hello, rec.Body.String()[:newl])
+		assert.Equal(t, OK_HELLO, rec.Body.String()[1:newl])
 	}
 
 }

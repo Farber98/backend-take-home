@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"cloudhumans/internal/models"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -16,5 +15,5 @@ func (controller *HelloController) LoadRoutes(gr *echo.Group) {
 }
 
 func (controller *HelloController) Hello(c echo.Context) error {
-	return c.JSON(http.StatusOK, models.NewResponseWithoutData(OK_HELLO))
+	return c.JSON(http.StatusOK, OK_HELLO)
 }

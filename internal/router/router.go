@@ -32,6 +32,9 @@ func Init() *echo.Echo {
 		arrayControllers := make([]interfaces.IController, 0)
 		arrayControllers = append(arrayControllers, &controllers.HelloController{})
 
+		//projectsService := &services.ProjectsService{}
+		arrayControllers = append(arrayControllers, &controllers.HelloController{})
+
 		group := e.Group("")
 		for _, c := range arrayControllers {
 			c.LoadRoutes(group)

@@ -81,5 +81,5 @@ Other important notes:
 * Add to the README file: (1) instructions to run the code; (2) what were the main technical decisions you made; (3) relevant comments about your project 
 * You must use English in your code and also in your docs
 
-This assignment should be doable in less than one day. We expect you to learn fast, communicate with us if you need, and make decisions regarding its implementation & scope to achieve the expected results on time.
+You can take the time you need for implementing this assignment, but we ask you to stop the commits at least 1 day before our interview so we can review it. We expect you to learn fast, communicate with us if you need, and make decisions regarding its implementation & scope to achieve the expected results on time.
 

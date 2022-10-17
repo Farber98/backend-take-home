@@ -33,5 +33,7 @@ func (controller *ProjectsController) Allocate(c echo.Context) error {
 
 	}
 
+	//score := controller.service.CalculateEligibilityScore(req)
+
 	return nil
 }

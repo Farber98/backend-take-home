@@ -24,12 +24,12 @@ func (controller *ProjectsController) Allocate(c echo.Context) error {
 	req := &models.Request{}
 
 	if err := c.Bind(req); err != nil {
-		return c.JSON(http.StatusInternalServerError, models.NewErrorResponse(ERR_BINDING))
+		return c.JSON(http.StatusInternalServerError, models.NewMsgResponse(ERR_BINDING))
 	}
 
 	err := controller.Service.Validate(req)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, models.NewErrorResponse(err.Error()))
+		return c.JSON(http.StatusBadRequest, models.NewMsgResponse(err.Error()))
 
 	}
 

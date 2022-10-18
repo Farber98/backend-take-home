@@ -36,6 +36,8 @@ func Init() *echo.Echo {
 		projectService := &services.ProjectsService{}
 		arrayControllers = append(arrayControllers, &controllers.ProjectsController{Service: projectService})
 
+		e.Static("/", "internal/docs")
+
 		group := e.Group("")
 		for _, c := range arrayControllers {
 			c.LoadRoutes(group)

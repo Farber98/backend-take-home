@@ -7,12 +7,12 @@ type Response struct {
 	InelegibleProjects []string `json:"ineligible_projects,omitempty"`
 }
 
-type ErrorResponse struct {
+type MsgResponse struct {
 	Message string `json:"message,omitempty"`
 }
 
-func NewErrorResponse(msg string) ErrorResponse {
-	return ErrorResponse{
+func NewMsgResponse(msg string) MsgResponse {
+	return MsgResponse{
 		Message: msg,
 	}
 }

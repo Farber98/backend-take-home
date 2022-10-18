@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: cloudhumans
+  version: 0.2.4
+  description: Backend challenge
+  contact:
+    email: juanfarberjob@gmail.com
+servers:
+  - url: "http://localhost:9999"
+    description: Local API
+tags:
+  - name: General
+    description: Test to see if the API is up
+  - name: Projects
+    description: Projects operations.
+
+paths:
+  /hello:
+    get:
+      tags:
+        - General
+      summary: Test to see if the API is up
+      description: Test to see if the API is up
+      responses:
+        "200":
+          description: Succesful operation.
+
+  /projects/allocate:
+    post:
+      tags:
+        - Projects
+      summary: Determines which project a new Pro will tackle based on the answers they provide in the Pro Portal.
+      description: determines which project a new Pro will tackle based on the answers they provide in the Pro Portal.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                {
+                  "age": 35,
+                  "education_level": "high_school",
+                  "past_experiences": { "sales": false, "support": true },
+                  "internet_test":
+                    { "download_speed": 50.4, "upload_speed": 40.2 },
+                  "writing_score": 0.6,
+                  "referral_code": "token1234",
+                }
+              required:
+                - age
+                - education_level
+                - past_experiences
+                - internet_test
+                - writing_score
+                - referral_code
+      responses:
+        "200":
+          description: Succesful operation.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  {
+                    "score": 7,
+                    "selected_project": "Determine if the Schrodinger's cat is alive",
+                    "eligible_projects":
+                      [
+                        "Determine if the Schrodinger's cat is alive",
+                        "Attend to users support for a YXZ Company",
+                        "Collect specific people information from their social media for XPTO Company",
+                      ],
+                    "ineligible_projects":
+                      ["Calculate the Dark Matter of the universe for Nasa"],
+                  }
+        "400":
+          description: Bad Request. Wrong parameter.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  {
+                    "message": "ERR. Age must be an integer equal or greater than 0.",
+                  }
+        "500":
+          description: Internal server error.Couldn't bind parameters properly.
+          content:
+            application/json:
+              schema:
+                type: object
+                example: { "message": "ERR. Binding parameters." }

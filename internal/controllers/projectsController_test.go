@@ -50,7 +50,7 @@ func TestAllocateErrors(t *testing.T) {
 
 			if assert.NoError(t, projectController.Allocate(c)) {
 
-				errorResponseModel := &models.ErrorResponse{}
+				errorResponseModel := &models.MsgResponse{}
 				err := json.Unmarshal(rec.Body.Bytes(), errorResponseModel)
 
 				if assert.NoError(t, err) {

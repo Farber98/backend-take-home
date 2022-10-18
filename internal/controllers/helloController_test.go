@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"cloudhumans/internal/models"
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -18,10 +20,14 @@ func TestHello(t *testing.T) {
 	controller := &HelloController{}
 
 	if assert.NoError(t, controller.Hello(c)) {
-		newl := len(rec.Body.String()) - 2
 
-		assert.Equal(t, http.StatusOK, rec.Code)
-		assert.Equal(t, OK_HELLO, rec.Body.String()[1:newl])
+		errorResponseModel := &models.MsgResponse{}
+		err := json.Unmarshal(rec.Body.Bytes(), errorResponseModel)
+
+		if assert.NoError(t, err) {
+			assert.Equal(t, http.StatusOK, rec.Code)
+			assert.Equal(t, OK_HELLO, errorResponseModel.Message)
+		}
 	}
 
 }

@@ -3,6 +3,7 @@ package router
 import (
 	"cloudhumans/internal/controllers"
 	"cloudhumans/internal/interfaces"
+	"cloudhumans/internal/services"
 	"log"
 	"sync"
 
@@ -32,8 +33,8 @@ func Init() *echo.Echo {
 		arrayControllers := make([]interfaces.IController, 0)
 		arrayControllers = append(arrayControllers, &controllers.HelloController{})
 
-		//projectsService := &services.ProjectsService{}
-		arrayControllers = append(arrayControllers, &controllers.HelloController{})
+		projectService := &services.ProjectsService{}
+		arrayControllers = append(arrayControllers, &controllers.ProjectsController{Service: projectService})
 
 		group := e.Group("")
 		for _, c := range arrayControllers {

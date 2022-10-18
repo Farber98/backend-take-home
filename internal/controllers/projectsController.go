@@ -12,7 +12,7 @@ const OK_ALLOCATE = "Hello from cloudhumans."
 const ERR_BINDING = "ERR. Binding parameters."
 
 type ProjectsController struct {
-	service *services.ProjectsService
+	Service *services.ProjectsService
 }
 
 func (controller *ProjectsController) LoadRoutes(gr *echo.Group) {
@@ -24,16 +24,25 @@ func (controller *ProjectsController) Allocate(c echo.Context) error {
 	req := &models.Request{}
 
 	if err := c.Bind(req); err != nil {
-		return c.JSON(http.StatusInternalServerError, ERR_BINDING)
+		return c.JSON(http.StatusInternalServerError, models.NewErrorResponse(ERR_BINDING))
 	}
 
-	err := controller.service.Validate(req)
+	err := controller.Service.Validate(req)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, models.NewErrorResponse(err.Error()))
 
 	}
 
-	//score := controller.service.CalculateEligibilityScore(req)
+	score := controller.Service.CalculateEligibilityScore(req)
 
-	return nil
+	selected, eligible, notEligible := controller.Service.Projects(score)
+
+	response := &models.Response{
+		Score:              score,
+		SelectedProject:    selected,
+		EligibleProjects:   eligible,
+		InelegibleProjects: notEligible,
+	}
+
+	return c.JSON(http.StatusOK, response)
 }

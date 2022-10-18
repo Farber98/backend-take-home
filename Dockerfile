@@ -14,5 +14,5 @@ COPY --from=builder /go/bin /app
 
 WORKDIR /app
 COPY config.toml .
-CMD ./amaro
+CMD ./cloudhumans
 EXPOSE 9999

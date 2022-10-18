@@ -12,6 +12,10 @@ const (
 	ERR_INTERNET_TEST    = "ERR. Internet test must be provided and be greater than 0.0."
 	ERR_WRITING_SCORE    = "ERR. Writing score must be a float between 0.0 and 1.0."
 	ERR_UNDER_AGE        = "ERR. Writing score must be a float between 0.0 and 1.0."
+	PROJECT_NASA         = "Calculate the Dark Matter of the universe for Nasa"
+	PROJECT_SCHRODINGER  = "Determine if the Schrodinger's cat is alive"
+	PROJECT_YXZ          = "Attend to users support for a YXZ Company"
+	PROJECT_XPTO         = "Collect specific people information from their social media for XPTO Company"
 )
 
 type ProjectsService struct {
@@ -44,7 +48,7 @@ func (ps *ProjectsService) Validate(req *models.Request) error {
 	return nil
 }
 
-func (ps *ProjectsService) CalculateEligibilityScore(req *models.Request) (score uint8) {
+func (ps *ProjectsService) CalculateEligibilityScore(req *models.Request) (score int8) {
 
 	if req.Age < 18 {
 		return 0
@@ -58,11 +62,12 @@ func (ps *ProjectsService) CalculateEligibilityScore(req *models.Request) (score
 	}
 
 	switch {
-	case req.PastExperiences.Support:
-		score += 3
-		fallthrough
+	case req.PastExperiences.Support && req.PastExperiences.Sales:
+		score += 8
 	case req.PastExperiences.Sales:
 		score += 5
+	case req.PastExperiences.Support:
+		score += 3
 	}
 
 	switch {
@@ -93,4 +98,30 @@ func (ps *ProjectsService) CalculateEligibilityScore(req *models.Request) (score
 	}
 
 	return score
+}
+
+func (ps *ProjectsService) Projects(score int8) (selected string, eligible, ineligible []string) {
+	switch {
+	case score > 10:
+		selected = PROJECT_NASA
+		eligible = append(eligible, PROJECT_NASA, PROJECT_SCHRODINGER, PROJECT_YXZ, PROJECT_XPTO)
+		ineligible = make([]string, 0, 0)
+	case score > 5:
+		selected = PROJECT_SCHRODINGER
+		eligible = append(eligible, PROJECT_SCHRODINGER, PROJECT_YXZ, PROJECT_XPTO)
+		ineligible = append(ineligible, PROJECT_NASA)
+	case score > 3:
+		selected = PROJECT_YXZ
+		eligible = append(eligible, PROJECT_YXZ, PROJECT_XPTO)
+		ineligible = append(ineligible, PROJECT_NASA, PROJECT_SCHRODINGER)
+	case score > 2:
+		selected = PROJECT_XPTO
+		eligible = append(eligible, PROJECT_XPTO)
+		ineligible = append(ineligible, PROJECT_NASA, PROJECT_SCHRODINGER, PROJECT_YXZ)
+	default:
+		eligible = make([]string, 0, 0)
+		ineligible = append(ineligible, PROJECT_NASA, PROJECT_SCHRODINGER, PROJECT_YXZ, PROJECT_XPTO)
+	}
+
+	return selected, eligible, ineligible
 }

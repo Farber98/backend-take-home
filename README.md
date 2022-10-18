@@ -83,3 +83,23 @@ Other important notes:
 
 You can take the time you need for implementing this assignment, but we ask you to stop the commits at least 1 day before our interview so we can review it. We expect you to learn fast, communicate with us if you need, and make decisions regarding its implementation & scope to achieve the expected results on time.
 
+
+# Solution:
+
+## Run tests:
+```
+$ go test -cover -race -v -count=1 ./...
+```
+
+## Setup:
+```
+$ docker compose build
+$ docker compose up
+```
+## Docs:
+Access them on http://localhost:9999 (Swagger UI)
+
+## Stack:
+* Go programming language.
+* Swagger API documentation.
+* Docker setup.

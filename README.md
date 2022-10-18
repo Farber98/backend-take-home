@@ -97,7 +97,7 @@ $ docker compose build
 $ docker compose up
 ```
 ## Docs:
-Access them on http://localhost:9999 (Swagger UI)
+Swagger file provided. If ran locally, access them on http://localhost:9999 (Swagger UI).
 
 ## Stack:
 * Go programming language.
